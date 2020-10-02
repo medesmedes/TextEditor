@@ -39,6 +39,7 @@ public class TextEditorLogic {
                 if (!selectedFile.exists()) {
                     fileContentArea.setText("");
                 } else {
+                    textEditor.setTitle(selectedFile.getName());
                     fileContentArea.setText(readFileAsString(selectedFile.getAbsolutePath()));
                 }
             } catch (IOException e) {
@@ -56,6 +57,7 @@ public class TextEditorLogic {
             File fileToSave = fileChooser.getSelectedFile();
             try (PrintWriter printWriter = new PrintWriter(fileToSave)) {
                 printWriter.print(fileContentArea.getText()); // prints a string
+                textEditor.setTitle(fileToSave.getName());
             } catch (IOException e) {
                 System.out.printf("An exception occurs %s", e.getMessage());
             }
@@ -128,7 +130,6 @@ public class TextEditorLogic {
     }
 
     public void highlightText(int startPosition, String matchingWord){
-        System.out.println(startPosition);
         if (regexCheckButton.isSelected()) {
             fileContentArea.setCaretPosition(startPosition + matchingWord.length());
             fileContentArea.select(startPosition, startPosition + matchingWord.length());
